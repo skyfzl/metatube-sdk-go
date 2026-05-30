@@ -16,6 +16,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # 必须显式声明 package 写入权限，否则打包后无法推送到 ghcr.io
+
     steps:
 
       - name: Check out code into the Go module directory
@@ -54,7 +58,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/metatube-community/metatube-server:dev
+            ghcr.io/${{ github.repository }}:dev
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -67,7 +71,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/metatube-community/metatube-server:latest
-            ghcr.io/metatube-community/metatube-server:${{ steps.shell.outputs.version }}
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ steps.shell.outputs.version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
