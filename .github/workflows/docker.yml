@@ -10,7 +10,7 @@ on:
       - 'main'
     tags:
       - '*'
-
+  workflow_dispatch: # <-- 核心：加上这一行，代表允许手动触发任务
 jobs:
 
   build:
